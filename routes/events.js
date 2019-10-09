@@ -4,17 +4,17 @@ var ObjectID = require('mongodb').ObjectID;
 
 const Event = require('../models/Event.js');
 
-/*Access for all the routes is private.*/
+/*Access for all the routes is private expect GET /events route.*/
 
 
-//Route GET admin/events/
+//Route GET /events
 //Getting all Events from the database
 router.get('/', (req,res) => {
   Event.find( )
       .then((events) => res.json(events))
 });
 
-//Route POST admin/events/create
+//Route POST /events/create
 //Adding new Event
 router.post('/create', (req,res) => {
   const newEvent = Event({
@@ -32,9 +32,9 @@ router.post('/create', (req,res) => {
   newEvent.save().then(event => res.json(event));
 });
 
-//Route PUT admin/events/edit/id
+//Route PUT events/update/id
 //Updating Event with given id
-router.put('/edit/:id', (req,res) => {
+router.put('/update/:id', (req,res) => {
 
   const editedEvent = {
     name: req.body.name,
@@ -55,7 +55,7 @@ router.put('/edit/:id', (req,res) => {
       .catch(err => res.status(400).json({"msg" : "Bad Request!!"}));
 });
 
-//Route DELETE admin/events/delete/id
+//Route DELETE events/delete/id
 //Delete Event
 router.delete('/delete/:id',(req,res) => {
 	Event.findById(req.params.id)

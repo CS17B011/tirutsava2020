@@ -20,7 +20,7 @@ app.get('/',(req,res) => {
 });
 
 //Admin Routes
-app.use('/admin/events',require('./routes/events.js'));
+app.use('/events',require('./routes/events.js'));
 
 app.listen(PORT, function(){
   console.log('Server is running on Port: ',PORT);
