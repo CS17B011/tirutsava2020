@@ -22,7 +22,7 @@ router.post('/create', (req,res) => {
   newFAQ.save()
   .then(ques => res.json(ques))
   .catch((err)=>{
-    res.json({"error":"something went wrong"})
+    res.json(err)
   });
 });
 
