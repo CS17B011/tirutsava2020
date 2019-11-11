@@ -1,0 +1,63 @@
+
+.cross-matrix {
+  width: 600px;
+  height: 500px;
+  margin-top: 50px;
+  margin-left: 80px;
+  float: left;
+}
+.dynamic-matrix {
+  margin-top : 50px;
+  margin-left: 50px;
+  float: left;
+}
+.square-visible {
+  background: rgb(215, 53, 230);
+  height: 55px;
+  width: 55px;
+  margin-top: -1px;
+  margin-right: -1px;
+  margin-left: -1px;
+  font-size: 20px;
+  border: 2px solid rgb(20, 2, 2);
+}
+.square-invisible {
+  background: transparent;
+  height: 55px;
+  width: 55px;
+  margin-top: -1px;
+  margin-right: -1px;
+  margin-left: -1px;
+  border: none;
+  font-size: 20px;
+  visibility: hidden;
+}
+.square-visible-2 {
+  background: rgb(215, 53, 230);
+  height: 25px;
+  width: 25px;
+  margin-top: -1px;
+  margin-right: -1px;
+  margin-left: -1px;
+  font-size: 20px;
+  border: 2px solid rgb(82, 81, 79);
+}
+.input-box {
+  position: fixed;
+  bottom: 250px;
+  left: 920px;
+}
+.submit-button{
+  position: fixed;
+  bottom: 220px;
+  left: 920px;
+}
+.get-hint-box {
+  position: absolute;
+  height: 400px;
+  width: 540px;
+  margin-top: 50px;
+  margin-left: 790px;
+  border: 0.1cm;
+  border-style: solid;
+}

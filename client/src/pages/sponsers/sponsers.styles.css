@@ -1,0 +1,62 @@
+.sponsers {
+    position: relative;
+    padding: 0%;
+    background-color: white;
+}
+.logo {
+    height: 270px;
+    width: 800px;
+    margin: 5px 250px;
+    transition: transform 2s;
+}
+.logo:hover {
+    transform: scale(1.02);
+}
+.presentedby, .poweredby{
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 0.7cm;
+    margin-left: 250px;
+}
+.presentedby-logo, .poweredby-logo{
+    height: 80px;
+    width: 200px;
+    margin-left: 250px;
+    border-radius: .3cm;
+}
+.inassociationwith {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 0.7cm;
+    margin-left: 250px;
+}
+.inassociationwith-logo {
+    height: 80px;
+    width: 200px;
+    margin-left: 250px;
+    border-radius: .3cm;
+}
+.bottom {
+    margin: 200px 0px;
+    margin-bottom: 0%;
+    background-color: white;   
+}
+.company-category {
+    position: relative;
+    font-size: 1.5cm;
+    font-weight: bold;
+    font-family: 'Titillium Web', sans-serif;
+    align-content: center;
+    margin: 40px 420px;
+    
+}
+.footer {
+    height: 80px;
+    background-color: ivory;
+}
+.social-media {
+    height: 40px;
+    width: 40px;
+    margin-top: 20px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-radius: 0.6cm;
+}
