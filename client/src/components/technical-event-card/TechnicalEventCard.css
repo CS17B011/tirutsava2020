@@ -1,0 +1,86 @@
+div#back-img {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* opacity: 0.8; */
+}
+
+#poster-back {
+  height: 85%;
+  width: 80%;
+  position: absolute;
+  overflow: hidden;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#poster {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-size: 100% 100%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+  transition: transform 1s;
+  overflow: hidden;
+}
+#poster:hover {
+  transform: scale(1.1);
+}
+.price-tag {
+  position: absolute;
+  bottom: 2%;
+  right: 10%;
+  font-size: 10px;
+  display: none;
+}
+
+div#event-btn {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 25%;
+  background: red;
+  z-index: 15;
+  display: none;
+}
+
+#poster_back:hover ~ #event-btn {
+  display: flex;
+}
+
+#event-btn:hover {
+  display: flex;
+}
+
+.info-box {
+  background: yellow;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.description {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: yellow;
+  top: 0;
+  display: none;
+}
+
+#entire-card :hover ~ .description {
+  z-index: 10000;
+}
