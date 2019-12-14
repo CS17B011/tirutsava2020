@@ -22,15 +22,18 @@
   },
   "homepage": "https://github.com/CS17B011/tirutsava2020#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.7.10",
-    "path": "^0.12.7"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "dotenv": "^8.1.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.3"
   }
 }
