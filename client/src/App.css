@@ -1,22 +1,15 @@
-.App {
+/* .cenx {
+  position: relative;
+} */
+.titleg {
+  position: absolute;
+  font-size: 2.4em;
+  width: 100%;
+  top: 6%;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-family: neon;
+  color: #fff;
+  text-shadow: 0 0 5px red, 0 0 15px red, 0 0 20px silver;
 }

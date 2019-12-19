@@ -1,0 +1,51 @@
+.backgroundimgg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.image-gallery-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  overflow: hidden;
+}
+.fullscreen .image-gallery-slide img {
+  max-height: 100vh;
+}
+.head {
+  top: 26.7rem;
+
+  font-size: 6rem;
+
+  line-height: 1;
+
+  padding: 0 2rem 4rem;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.neon {
+  font-family: cursive;
+  font-size: 5rem;
+  color: #f8f4f4;
+  text-shadow: 0 0 5px #f8f4f4, 0 0 10px #f8f4f4, 0 0 15px #f8f4f4,
+    0 0 20px #eb2f06, 0 0 35px #eb2f06, 0 0 40px #eb2f06, 0 0 50px #eb2f06,
+    0 0 75px #eb2f06;
+  animation: blink 2.5s ease-in-out alternate;
+}
+
+@keyframes blink {
+  from {
+    text-shadow: 0 0 10px #f8f4f4, 0 0 20px #ffffff, 0 0 30px #ffffff,
+      0 0 40px #228dff, 0 0 70px #228dff, 0 0 80px #228dff, 0 0 100px #228dff,
+      0 0 150px #228dff;
+  }
+  to {
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff,
+      0 0 20px #ff0000, 0 0 35px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000,
+      0 0 75px #ff0000;
+  }
+}
