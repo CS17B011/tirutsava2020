@@ -1,15 +1,4 @@
-/* .cenx {
-  position: relative;
-} */
-.titleg {
-  position: absolute;
-  font-size: 2.4em;
-  width: 100%;
-  top: 6%;
-  text-align: center;
-  letter-spacing: 2px;
-  font-weight: 700;
-  font-family: neon;
-  color: #fff;
-  text-shadow: 0 0 5px red, 0 0 15px red, 0 0 20px silver;
+* {
+  margin: 0;
+  padding: 0;
 }
