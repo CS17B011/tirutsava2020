@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "mdbreact": "^4.23.1",
     "aos": "^2.3.4",
     "classnames": "^2.2.6",
     "node-sass": "^4.13.0",
@@ -10,10 +11,11 @@
     "react-countup": "^4.2.6",
     "react-coverflow": "^0.2.20",
     "react-dom": "^16.10.2",
+    "react-image-gallery": "^0.9.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0"
     "react-particles-js": "^2.7.0",
     "react-responsive": "^8.0.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
     "react-youtube": "^7.9.0"
   },
   "scripts": {

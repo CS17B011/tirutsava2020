@@ -1,4 +1,9 @@
 import React from "react";
+
+import Faq from "./pages/faqs/main";
+import Gallery from "./pages/gallery/gallery";
+import Query from "./pages/faqs/query/query";
+import Sponsers from "./pages/sponsers/sponsers";
 import logo from "./logo.svg";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
@@ -53,6 +58,10 @@ const slides = [
 const App = () => {
   return (
     <Router>
+      <Route exact path="/faq" component={Faq} />
+      <Route exact path="/query" component={Query} />
+      <Route exact path="/sponsers" component={Sponsers} />
+      <Route exact path="/gallery" component={Gallery} />
       <div>
         <Switch>
           <Route exact path="/aboutus" component={AboutUs} />
