@@ -1,0 +1,62 @@
+.event-details {
+  background-image: url(background-technical.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-family: "Gabriela", serif;
+  font-weight: 100;
+}
+.event-details-poster {
+  width: 25vw;
+  height: 75vh;
+  /* position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 5vw; */
+  min-width: 400px;
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+}
+
+.event-details-img {
+  width: 100%;
+  height: 100%;
+}
+
+.event-details-text {
+  /* position: absolute;
+  top: 10vh;
+  left: 40vw;
+  right: 5vw;
+  margin: auto; */
+  color: rgb(228, 226, 226);
+  font-size: 1.2rem;
+  font-weight: 400;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  height: 90vh;
+  width: 50vw;
+  min-width: 500px;
+}
+.event-details-text::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+.event-details-text::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #1b6379;
+}
+
+.event-details-text::-webkit-scrollbar-thumb {
+  background-color: #39c3cb;
+}
