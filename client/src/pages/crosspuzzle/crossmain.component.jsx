@@ -1,29 +1,49 @@
 import React,{Fragment} from 'react';
 import './crossmain.styles.css';
+import  CreateMatrix  from './createMatrix';
 import { Node, Context } from 'react-mathjax2';
+import Questions from './questions.component'; 
+import Timer from './timer';
 // npm i react-mathjax --save
 //import {Formula} from './formula.component';
+
 class CrossPuzzle extends React.Component {
     constructor(props) {
         super(props);
         // $${{ - b \pm \sqrt {{b^2} - 4ac}} \over {2a}}$$
         this.state = {
-            N : 6,
-            M : 6,
-            isSquare : "1000101111111010101011111010001010000",
-            isFill :   "0000000000000000000000000000000000000",
+            N : 29,            // static
+            M : 31,            // static
+            isSquare : "00000000001000000000000000000000000000000100000000000000000000000000000010000000000000000000000000000001000000000000000000000000000000100000000000000000000000000001010000000000000000000000000000101001000000000000000000000000010100110000000000000000000000111111111110000000000000000000000101000100000000000000001111111111000011111111000000000000000001000001000100000000000000000000100000100010000000000000111111110000010001000000000000000000001000001000100000000000000011111111100100010000000000000000000010000001000000000000000000000011111111100000000000000000000000100000010000000000000000000000000000001000000000000000000000000000000100000000000000000000000000111111111111111111110000000000000001000000000000000000000000000000100000000000000000000000000000010000000000000000000000000000001000000000000000000000001111111111111110000000000000000000000010000000000000000000000000000001000000000000000", // 1000101111111010101011111010001010000 static
+            isFill :  "0000000000000000000000000000000000000",
+
+
+
+
+
+
             dynamicMatrix : [],
             errorMessage : "",
             getHint : ["hello"],
             isGetHint : Array(36).fill(0),
             hints : Array(36).fill(Formula("\\huge\\int_{a}^{b} x^2cos(sin(x)) dx")),
             newAnswer : "",
-            squareValue : Array(36).fill('#'),
-            dynamicMatrixValue : Array(36).fill(1)    
+            squareValue : Array(29 * 31).fill('#'),
+            dynamicMatrixValue : Array(36).fill(1),
+            questions : [],
+            isSubmit : false,
+            id : "5e0dea395b95d331e05d7283",
+            user : {                                    // user object for updating user
+                crossPuzzleId : 1,
+                gameState : "",
+                hintTaken : "",
+                isSubmit : false,
+                timeTaken : 4
+            }
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleCellClick = this.handleCellClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);   // for selecting piece of matrix 
+        this.handleChange = this.handleChange.bind(this); // for user input
+        this.handleCellClick = this.handleCellClick.bind(this); // for getting hint on selected cell
     }
 
     handleChange(input, req, type, i, j) {
@@ -38,37 +58,9 @@ class CrossPuzzle extends React.Component {
                 errorMessage : "",
                 newAnswer : input
             })
-            /*if (!type) {
-                let temValue = this.state.squareValue
-                let temFill = this.state.isFill
-                for (let k = i; k < i + req; k++) {
-                    temValue[this.state.M * k + j] = input[k - i];
-                    let index = this.state.M * k + j
-                    temFill = temFill.substr(0, index) + '1'+ temFill.substr(index + 1);
-                }
-                
-                this.setState({
-                    squareValue : temValue,
-                    isFill : temFill
-                })
-            }
-            else {
-                let temValue = this.state.squareValue
-                let temFill = this.state.isFill
-                for (let k = i; k < i + req; k++) {
-                    temValue[j * this.state.M + k] = input[k - i];
-                    let index = j * this.state.M + k;
-                    temFill = temFill.substr(0, index) + '1'+ temFill.substr(index + 1);
-                }
-                
-                this.setState({
-                    squareValue : temValue,
-                    isFill : temFill
-                })
-                console.log(temFill);
-            }*/
         }
     }
+
     setNewAnswer(req, type, i, j) {
         let input = this.state.newAnswer
         if (input.length != req) {
@@ -77,6 +69,7 @@ class CrossPuzzle extends React.Component {
             })
         }
         else {
+            let userBody = this.state.user;
             if (!type) {
                 let temValue = this.state.squareValue
                 let temFill = this.state.isFill
@@ -90,6 +83,7 @@ class CrossPuzzle extends React.Component {
                     squareValue : temValue,
                     isFill : temFill
                 })
+                userBody.gameState = this.state.squareValue
             }
             else {
                 let temValue = this.state.squareValue
@@ -104,9 +98,18 @@ class CrossPuzzle extends React.Component {
                     squareValue : temValue,
                     isFill : temFill
                 })
+                userBody.gameState = this.state.squareValue
             }
+            fetch(`http://localhost:4000/user/${this.state.id}`,               // updating user data
+                    {method : "put",
+                     body: JSON.stringify(userBody),
+                     headers : {
+                         "Content-Type" : "application/json"
+                     }}).then(res => res.json())
+                        .then(data => data);
         }
     }
+
     getHintHandleChange(cellNo) {
         let newgetHint = [], newIsGetHint = [];
         newgetHint.push(this.state.hints[cellNo])
@@ -117,6 +120,7 @@ class CrossPuzzle extends React.Component {
             isGetHint : newIsGetHint
         })
     } 
+
     handleCellClick(cellNo) {
         let newgetHint = []
         if (!this.state.isGetHint[cellNo]) {
@@ -129,6 +133,7 @@ class CrossPuzzle extends React.Component {
             getHint : newgetHint
         })
     }
+
     handleClick(i, j) {
         const N = this.state.N, M = this.state.M;
         const a = i * M + j - 1, b = i * M + j + 1;
@@ -182,45 +187,71 @@ class CrossPuzzle extends React.Component {
         }
     }
     
-    
+    componentDidMount() {
+        /*console.log("working");
+        fetch(`http://localhost:4000/user/?id=${this.state.id}`)
+            .then(res => res.json())
+            .then(data => this.setState({
+                isSubmit : data.response.isSubmit,
+                squareValue : data.response.gameState}))
+            .then( () => {
+                        fetch('http://localhost:4000/c3')
+                            .then(res => res.json())
+                            .then(data => this.setState({
+                                questions : data.response[0].questions,
+                                isSquare : data.response[0].binaryArray}))
+                            .then(() => {
+                                if (this.state.isSubmit) {
+                                    let str = "";
+                                    for (let i = 0; i < this.state.N * this.state.M; i++) str += "0";
+                                    this.setState({
+                                        isSquare : str,
+                                        questions : []
+                                    });
+                                }
+                            })
+                    })*/
+    }
+
+
     render() {
         return (
             <div className = "main">
-                <div className = "cross-matrix">
-                    { createMatrix(this.state.N, this.state.M, this.state.isSquare, this.handleClick, this.state.squareValue) }
+                <div className="tim">
+                   
                 </div>
-                <div className = "get-hint-box">
-                    <div className = "dynamic-matrix">
-                        {this.state.dynamicMatrix}
+                <div className="tem">
+                    <div className = "cross-matrix">
+                        
+                        <CreateMatrix N={this.state.N} M={this.state.M} isSquare={this.state.isSquare} 
+                                        handleClick={this.handleClick} squareValue={this.state.squareValue} /> 
+                        <div className="questions-c"><Questions questions={this.state.questions} /></div>
                     </div>
-                    <div style ={{marginLeft : 200, marginTop : 150}}>{this.state.getHint}</div>
-                    <div>
-                        <output>{this.state.errorMessage}</output>
-                    </div>
+                    
+                    {/*<div className = "get-hint-box">
+                        <div className = "dynamic-matrix">
+                            {this.state.dynamicMatrix}
+                        </div>
+                        <div style ={{marginLeft : 200, marginTop : 150}}>{this.state.getHint}</div>
+                        <div>
+                            <output>{this.state.errorMessage}</output>
+                        </div>
+        </div>*/}
                 </div>
             </div>
         );
     }
 }
+
+
+
+
+
 function Formula(props) {
     let tem = [];
     tem.push(<Context input="tex"><Node inline >{props}</Node></Context>)
     //<Context input="tex"><Node inline>{props}</Node></Context>
     return tem;
-}
-function createMatrix(N, M, s, handleClick, value) {
-    let matrix = []
-    for (let i = 0; i < N; i++) {
-        let child = []
-        for (let j = 0; j < M; j++) {
-            const idx = i * M + j;
-            if (s[idx] == '0') child.push(<button className = "square-invisible">j</button>);
-            else child.push(<button className = "square-visible"
-                                    onClick = {() => handleClick(i, j)}>{value[idx]}</button>);
-        }
-        matrix.push(<div>{child}</div>);
-    }
-    return matrix;
 }
 
 export default CrossPuzzle;

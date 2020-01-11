@@ -10,8 +10,11 @@ const mongoose = require('mongoose');
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-mongoose.connect(process.env.DBURL, {useNewUrlParser: true, useCreateIndex: true})
+const c3 = require('./routes/c3');
+const user = require('./routes/user');
+app.use('/c3', c3);
+app.use('/user', user);
+mongoose.connect(process.env.DBURL, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
     .then(() => console.log('Database is Connected...'))
     .catch((err) => console.log(err));
 

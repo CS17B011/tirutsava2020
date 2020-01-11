@@ -1,7 +1,20 @@
-
+.main {
+  width: auto;
+  height: auto;
+  
+  margin: 0;
+  padding: 0; 
+}
+.tim {
+  margin-top: 30px;
+  margin-left: 900px;
+}
+.tem {
+  margin-top: 130px;
+}
 .cross-matrix {
-  width: 600px;
-  height: 500px;
+  width: auto;
+  height: auto;
   margin-top: 50px;
   margin-left: 80px;
   float: left;
@@ -12,52 +25,115 @@
   float: left;
 }
 .square-visible {
-  background: rgb(215, 53, 230);
-  height: 55px;
-  width: 55px;
+  background: rgb(173,180,58);
+  background: linear-gradient(90deg, rgba(173,180,58,1) 0%, rgba(21,201,208,1) 0%, rgba(118,238,250,1) 13%, rgba(185,255,251,0.9136029411764706) 66%, rgba(69,252,238,1) 100%);
+  height: 40px;
+  width: 40px;
   margin-top: -1px;
   margin-right: -1px;
   margin-left: -1px;
-  font-size: 20px;
-  border: 2px solid rgb(20, 2, 2);
+  font-size: 8px;
+  margin-bottom: -1px;
+  font-weight: bold;
+  color: black;
+  border: 2px solid black;
+  border-radius: 0.1cm;
 }
 .square-invisible {
   background: transparent;
-  height: 55px;
-  width: 55px;
+  height: 40px;
+  width: 40px;
   margin-top: -1px;
   margin-right: -1px;
   margin-left: -1px;
+  margin-bottom: -1px;
   border: none;
-  font-size: 20px;
+  font-size: 8px;
   visibility: hidden;
 }
 .square-visible-2 {
-  background: rgb(215, 53, 230);
+  background: rgb(173,180,58);
+  background: linear-gradient(90deg, rgba(173,180,58,1) 0%, rgba(21,201,208,1) 0%, rgba(118,238,250,1) 13%, rgba(185,255,251,0.9136029411764706) 66%, rgba(69,252,238,1) 100%);
   height: 25px;
   width: 25px;
   margin-top: -1px;
   margin-right: -1px;
   margin-left: -1px;
   font-size: 20px;
+  border-radius: 2mm;
   border: 2px solid rgb(82, 81, 79);
 }
 .input-box {
-  position: fixed;
+  position: relative;
   bottom: 250px;
-  left: 920px;
+  margin-top: 430px;
+  left: 0px;
 }
 .submit-button{
-  position: fixed;
+  position: relative;
   bottom: 220px;
-  left: 920px;
+  margin-top: 0px;
+  left: 0px;
 }
 .get-hint-box {
-  position: absolute;
-  height: 400px;
+  position: relative;
+  height: 500px;
   width: 540px;
   margin-top: 50px;
-  margin-left: 790px;
+  margin-left: 750px;
   border: 0.1cm;
   border-style: solid;
+}
+
+.questions-c {
+  margin-top: 30px;
+}
+body {
+	margin: 0;
+	width: 100%;
+	height: 100vh;
+	font-family: "Exo", sans-serif;
+	color: #fff;
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.container {
+	width: 100%;
+	position: absolute;
+	top: 35%;
+	text-align: center;
+}
+
+h1 {
+	font-weight: 300;
+}
+
+h3 {
+	color: #eee;
+	font-weight: 100;
+}
+
+h5 {
+	color:#eee;
+	font-weight:300;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+	color: #ddd;
 }
