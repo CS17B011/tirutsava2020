@@ -25,6 +25,23 @@ c3Router.post('/', (req, res) => {
     })
 })
 
+// UPDATE
+c3Router.put('/:id', (req, res) => {
+    C3.findOneAndUpdate({_id : req.params.id}, req.body, {runValidators : true}, (err, response) => {
+        if(err) {
+            console.error(err);
+            res.status(500).json({message:{
+                msgBody : "Unable to Update User",
+                msgError : true
+            }});
+        }
+        else
+        res.status(200).json({message:{
+            msgBody: "Successfully Updated User",
+            msgError : false
+        }});   
+    })
+})
 module.exports = c3Router;
 
 /* {

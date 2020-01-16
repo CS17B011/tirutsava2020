@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import './timer.css';
 class Timer extends Component {
     constructor(props) {
-        super();
-        this.state = { time: {}, seconds: 2400000 };
-        this.timer = 0;
-        this.startTimer = this.startTimer.bind(this);
-        this.countDown = this.countDown.bind(this);
+        super(props);
+        this.state = {
+            time : {},
+            seconds : 10
+        };
+        this.timer  = 0;
     }
-
-    secondsToTime(secs){
+    
+    secondsToTime = (secs) => {
         let days = Math.floor(secs / (24 * 60 * 60));
         let divisor_for_hours = secs % (24 * 60 * 60);
         let hours = Math.floor(divisor_for_hours / (60 * 60));
@@ -29,32 +30,40 @@ class Timer extends Component {
         return obj;
    }
 
-    componentDidMount() {
-        let timeLeftVar = this.secondsToTime(this.state.seconds);
-        this.setState({ time: timeLeftVar });
-        this.startTimer();
+    componentWillReceiveProps(props) {
+        let today = new Date();
+        let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+        let D = props.start.startDate, H = props.start.startTimeHours, M = props.start.startTimeMins;
+        let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
+        console.log(secondsLeft);
+        this.setState({
+            seconds : secondsLeft
+        });
+        this.startCountDown();
     }
-
-    startTimer() {
+    uselessFunc = () => {
+        this.props.changeVisibility();
+    }
+    startCountDown = () => {
         if (this.timer == 0 && this.state.seconds > 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
     }
 
-    countDown() {
-        // Remove one second, set state so a re-render happens.
-        let seconds = this.state.seconds - 1;
-        this.setState({
-            time: this.secondsToTime(seconds),
-            seconds: seconds,
-        });
-        
-        // Check if we're at zero.
-        if (seconds == 0) { 
+    countDown = () => {
+       let secs = this.state.seconds - 1;
+       this.setState({
+           time : this.secondsToTime(secs),
+           seconds : secs
+       });
+       if (secs <= 0) {
+           this.setState({
+               time : {}
+           });
+            this.props.changeVisibility();
             clearInterval(this.timer);
         }
     }
-
     render() {
         return(
         <div>

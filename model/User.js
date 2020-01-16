@@ -10,7 +10,7 @@ const userSchema = new Schema({
     }],
     isSubmit : {
         type : Boolean
-    },
+    }, 
     timeTaken : {
         type : Number
     }

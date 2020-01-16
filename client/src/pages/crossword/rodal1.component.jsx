@@ -21,6 +21,7 @@ export default function Rodal1(props) {
         <div className="crossword-question">{props.currentQuestion}</div>
         <input onChange={e => props.handleOnChange(e.target.value)} type="text" className="crossword-input" onKeyPress={(e) => props.avoidSpace(e)}/>
         <button className="crossword-input-submit" onClick={() => props.handleOnSubmit()}>SUBMIT</button>
+        <button className="crossword-input-lock" onClick={() => props.handleOnLock()}> LOCK</button>
         <h4>{props.error}</h4>
       </div>
       <div className="rodal-hint" style={{visibility:props.rodalHintS.visibility}}>

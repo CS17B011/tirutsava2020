@@ -14,7 +14,17 @@ const C3 = new Schema({
     answerArray : [{
         index : Number,
         answer : String
-    }]
+    }],
+    start : {
+        startDate : Number,
+        startTimeHours : Number,
+        startTimeMins : Number
+    },
+    end : {
+        endDate : Number,
+        endTimeHours : Number,
+        endTimeMins : Number
+    }
 })
 
 module.exports = mongoose.model('C3', C3);

@@ -182,6 +182,22 @@ body {
 .crossword-input-submit:hover{
     background-color: #3498db;
 }
+.crossword-input-lock {
+    height: 33px;
+    width: 100px;
+    border-radius: 0.5cm;
+    background: none;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+    border: 2px solid red;
+    transition: 0.25s;
+    margin-left: 10px;
+}
+.crossword-input-lock:hover{
+    background-color: red;
+}
 h4 {
     color: red;
 }

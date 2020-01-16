@@ -6,6 +6,7 @@ import logo from '../sponsers/logo.jpeg';
 import CreateMatrix from '../crosspuzzle/createMatrix';
 import Rodal1 from './rodal1.component';
 import Rodal2 from './rodal2.component';
+import Timer from '../crosspuzzle/timer';
 class Crossword extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +33,13 @@ class Crossword extends Component {
                 "662" : {r : 'a', l : 20},
                 "845" : {r : 'a', l : 15}
             },
+            start : {
+                startDate : 30,
+                startTimeHours : 11,
+                startTimeMins : 50
+            },
+            instructions:"visible",
+            crossword : "hidden",
             // game variables
             questionArray: [],
             hintArray : [],
@@ -88,6 +96,7 @@ class Crossword extends Component {
             opacity : "1"}});
     }
     handleClick = (key) => {
+        console.log(this.state.start);
         this.setState({ visible: true, cellKey : key});
         let questionArray = this.state.questionArray;
         for (let i = 0; i < questionArray.length; i++) {
@@ -146,7 +155,12 @@ class Crossword extends Component {
             });
         }
     }
+    // handle for Lock
 
+    handleOnLock = () => {
+        // write your code here
+        prompt("Hello World!")
+    }
     handleGetHint = () => {
         // Fetching hint
         fetch('http://localhost:4000/c3')
@@ -167,12 +181,19 @@ class Crossword extends Component {
         if (k == 32) event.preventDefault();
     }
 
+    changeVisibility = () => {
+        this.setState({
+            instructions : "hidden",
+            crossword : "visible"
+        })
+    }
     componentDidMount() {
         // Fetching Questions
         fetch('http://localhost:4000/c3')
         .then(res => res.json())
-        .then(data => this.setState({
-            questionArray: data.response[0].questions}))
+        .then(data => {
+            this.setState(() => {return {start : data.response[1].start}});
+        });
     }
 
     render() {
@@ -182,7 +203,9 @@ class Crossword extends Component {
                 <h3 className="crossword-present">presents</h3>
                 <h1 className="crossword-c3">C3</h1>
                 <h1 className="crossword-c32"> = crossword * caption * calculus</h1>
-                <div className="cross-word">
+                <Timer start={this.state.start} changeVisibility={this.changeVisibility}/>
+                <div className="instructions" style={{visibility:this.state.instructions}}>instructions</div>
+                <div className="cross-word" style={{visibility:this.state.crossword}}>
                     <CreateMatrix N={this.state.N} M={this.state.M} isSquare={this.state.isSquare} 
                                     isQuestionCell={this.state.isQuestionCell}
                                     isHintCell={this.state.isHintCell}
@@ -195,6 +218,7 @@ class Crossword extends Component {
                             error={this.state.inputError}
                             handleOnChange={this.handleOnChange}
                             handleOnSubmit={this.handleOnSubmit}
+                            handleOnLock={this.handleOnLock}
                             avoidSpace={this.avoidSpace}
                             currentQuestion={this.state.currentQuestion}
                             handleGetHint={this.handleGetHint} hint={this.state.currentHint}
