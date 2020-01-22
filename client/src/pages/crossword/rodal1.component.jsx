@@ -7,8 +7,9 @@ export default function Rodal1(props) {
     <Rodal visible={props.visible} onClose={props.hide} animation="rotate"
         customStyles={{
             background: "black",
-            opacity: "0.8",
-            "margin-left": ""
+            opacity: "0.7",
+            width: 400,
+            height : 300
         }}
     > 
       <div>
@@ -21,7 +22,7 @@ export default function Rodal1(props) {
         <div className="crossword-question">{props.currentQuestion}</div>
         <input onChange={e => props.handleOnChange(e.target.value)} type="text" className="crossword-input" onKeyPress={(e) => props.avoidSpace(e)}/>
         <button className="crossword-input-submit" onClick={() => props.handleOnSubmit()}>SUBMIT</button>
-        <button className="crossword-input-lock" onClick={() => props.handleOnLock()}> LOCK</button>
+        <div><button className="crossword-input-lock" onClick={() => props.handleOnLock()}> LOCK</button></div>
         <h4>{props.error}</h4>
       </div>
       <div className="rodal-hint" style={{visibility:props.rodalHintS.visibility}}>

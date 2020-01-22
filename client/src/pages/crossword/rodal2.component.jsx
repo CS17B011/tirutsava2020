@@ -7,8 +7,7 @@ export default function Rodal1(props) {
     <Rodal visible={props.visible} onClose={props.hide} animation="rotate"
         customStyles={{
             background: "black",
-            opacity: "0.8",
-            "margin-left": "900px"
+            opacity: "0.8"
         }}
     >
       <div>

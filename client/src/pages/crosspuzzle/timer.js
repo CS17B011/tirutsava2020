@@ -4,8 +4,14 @@ class Timer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            status : "Contest Start In",
             time : {},
-            seconds : 10
+            seconds : 10,
+            end : {
+                endDate : 30,
+                endTimeHours : 11,
+                endTimeMins : 50
+            }
         };
         this.timer  = 0;
     }
@@ -34,17 +40,38 @@ class Timer extends Component {
         let today = new Date();
         let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
         let D = props.start.startDate, H = props.start.startTimeHours, M = props.start.startTimeMins;
+        let dE = props.end.endDate, hE = props.end.endTimeHours, mE = props.end.endTimeMins;
         let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
-        console.log(secondsLeft);
-        this.setState({
-            seconds : secondsLeft
-        });
-        this.startCountDown();
+        let secondsLeftForEnd = ((dE - date) * 24 * 60 * 60 + (hE - hour) * 60 * 60 + (mE - min) * 60 - sec);
+        this.setState({end : props.end});
+        //console.log(secondsLeft);
+        if (secondsLeft >= -1000000000) {
+            this.setState({
+                seconds : secondsLeft
+            });
+            this.startCountDown();
+        }
+        else {
+            if (props.isTime !== true) {
+                props.changeVisibility();
+            }
+            if (this.state.status !== "Contest End In") {
+                this.setState({
+                    status : "Contest End In"
+                });
+            }
+            this.timer = 0;
+            this.setState({
+                seconds : secondsLeftForEnd
+            })
+            this.startCountDown()
+        }
     }
     uselessFunc = () => {
         this.props.changeVisibility();
     }
     startCountDown = () => {
+        //console.log(this.state.seconds);
         if (this.timer == 0 && this.state.seconds > 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
@@ -52,6 +79,7 @@ class Timer extends Component {
 
     countDown = () => {
        let secs = this.state.seconds - 1;
+       //console.log(secs);
        this.setState({
            time : this.secondsToTime(secs),
            seconds : secs
@@ -60,24 +88,58 @@ class Timer extends Component {
            this.setState({
                time : {}
            });
-            this.props.changeVisibility();
             clearInterval(this.timer);
+            let today = new Date();
+            let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+            let end = this.state.end;
+            let dE = end.endDate, hE = end.endTimeHours, mE = end.endTimeMins;
+            let secondsLeftForEnd = ((dE - date) * 24 * 60 * 60 + (hE - hour) * 60 * 60 + (mE - min) * 60 - sec);
+            this.timer = 0;
+            this.props.changeVisibility();
+            this.timer = 0;
+            this.setState({
+                status : "Contest Ends In",
+                seconds : secondsLeftForEnd
+            })
+            this.startCountDown()
         }
     }
+    startCountDown2 = () => {
+        this.props.changeVisibility();
+        console.log(this.state.seconds);
+        if (this.timer == 0 && this.state.seconds > 0) {
+            this.timer = setInterval(this.countDown2, 1000);
+        }
+    }
+    countDown2 = () => {
+        let secs = this.state.seconds - 1;
+        console.log(this.state.seconds - 1);
+        this.setState({
+            time : this.secondsToTime(secs),
+            seconds : secs
+        });
+        if (secs <= 0) {
+            this.setState({
+                time : {}
+            });
+             this.props.changeVisibility();
+             clearInterval(this.timer);
+         }
+     }
     render() {
         return(
         <div>
-            {UI(this.state.time)}
+            {UI(this.state.time, this.state.status)}
         </div>
         );
     }
 }
 
 
-function UI (params) {
+function UI (params, status) {
     let ui = [];
     
-    if (params.s || params.m) ui.push(<h2>Contest Starts In</h2>)
+if (params.s || params.m) ui.push(<h2>{status}</h2>)
     if (params.d) {
         ui.push(<div className="timer"><h3 className="name">Days</h3><button className="time">{params.d}</button></div>)
     }

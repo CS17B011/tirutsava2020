@@ -4,16 +4,16 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     
     gameState : [],
-    hintTaken : [{
-        index : Number,
-        hint : Number
-    }],
-    isSubmit : {
-        type : Boolean
-    }, 
-    timeTaken : {
-        type : Number
-    }
+    isVisible : [],
+    answers : [
+        {index : Number,
+        isLock : Number,
+        time : {
+            hour : Number,
+            min : Number,
+            sec : Number
+        }}
+    ]
 })
 
 module.exports = mongoose.model('User', userSchema);

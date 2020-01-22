@@ -5,11 +5,21 @@ const C3 = new Schema({
     
     questions : [{
         index : Number, 
-        Q : String
+        Q : String,
+        time : {
+            startDate : Number,
+            startTimeHours : Number,
+            startTimeMins : Number
+        }
     }],
     hints : [{
         index : Number,
-        H : String
+        H : String,
+        time : {
+            startDate : Number,
+            startTimeHours : Number,
+            startTimeMins : Number
+        }
     }],
     answerArray : [{
         index : Number,
