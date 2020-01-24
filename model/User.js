@@ -5,6 +5,7 @@ const userSchema = new Schema({
     
     gameState : [],
     isVisible : [],
+    colorValue : [],
     answers : [
         {index : Number,
         isLock : Number,

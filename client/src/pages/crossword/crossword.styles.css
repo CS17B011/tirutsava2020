@@ -152,11 +152,29 @@ body {
     color: blanchedalmond;
     height: 145px;
     width: 400px;
-    text-align: justify;
-    overflow-wrap: break-word;
-    white-space: nowrap;
+    
   }
-
+.crossword-question p{
+    
+    border: 1px dashed black;
+  padding: 1em;
+  font-size: calc(0.6vw + 0.6em);
+  direction: ltr;
+  width: 30vw;
+  margin:auto;
+  text-align:justify;
+  word-break: break-word;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  -ms-word-break: break-word;
+  word-break: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  
+   }
 .crossword-input {
     height: 25px;
     width: 200px;

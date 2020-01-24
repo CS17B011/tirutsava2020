@@ -3,12 +3,12 @@ import './crossword.styles.css';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 import logo from '../sponsers/logo.jpeg';
-import CreateMatrix from '../crosspuzzle/createMatrix';
+import CreateMatrix from './createMatrix';
 import Rodal1 from './rodal1.component';
 import Rodal2 from './rodal2.component';
 import Timer from '../crosspuzzle/timer';
 import Instructions from './instructions';
-class Crossword extends Component {
+class Crossword extends Component { 
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +34,7 @@ class Crossword extends Component {
                 "662" : {r : 'a', l : 20},
                 "814" : {r : 'a', l : 15}
             },
+            questionColor : Array(30 * 31).fill("red"),
             // start time
             start : {
                 startDate : 30,
@@ -41,7 +42,7 @@ class Crossword extends Component {
                 startTimeMins : 50
             },
             // end time
-            end : {
+            end : { 
                 endDate : 30,
                 endTimeHours : 11,
                 endTimeMins : 50
@@ -52,6 +53,7 @@ class Crossword extends Component {
             questionArray: [],
             hintArray : [],
             squareValue : Array(30 * 31).fill('#'),
+            colorValue : Array(30 * 31).fill("rgb(46, 14, 231)"),
             isVisible : Array(30 * 31).fill("hidden"),
             visible: false,
             visible2: false,
@@ -61,8 +63,9 @@ class Crossword extends Component {
             currentAnswer : "",
             currentHint : "",
             // condition for rendering instructions and crossword
-            isTime : true,
+            isTime : false,
             // Rodal variable
+            change : true,
             rodalQuestion : {
                 visibility : "visible",
                 opacity : "1"},
@@ -74,6 +77,7 @@ class Crossword extends Component {
             user : {
                 gameState : [],
                 isVisible : [],
+                colorValue : [],
                 answers : [
                     
                 ] /* {index : "",
@@ -103,7 +107,8 @@ class Crossword extends Component {
             opacity : "1"}, 
             rodalHint:{
             visibility : "hidden",
-            opacity : "0.7"}});
+            opacity : "0.7"},
+        change : true});
     }
     handleRodalHint = () => {
         this.setState({rodalQuestion:{
@@ -111,32 +116,74 @@ class Crossword extends Component {
             opacity : "0.7"}, 
             rodalHint:{
             visibility : "visible",
-            opacity : "1"}});
+            opacity : "1"},
+        change : false});
     }
 
     // event after clicking a cell
     handleClick = (key) => {
-        console.log(this.state.squareValue);
+        //console.log(this.state.squareValue);
         this.setState({ visible: true, cellKey : key});
         let questionArray = this.state.questionArray;
+        let hintArray = this.state.hintArray;
+        let questionColor = this.state.questionColor;
+        let currentQuestion = "", currentHint = "";
         for (let i = 0; i < questionArray.length; i++) {
-            console.log(questionArray[i].index);
+            console.log(questionArray[i].index + " " + key);
             let today = new Date();
             let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
             let D = questionArray[i].time.startDate, H = questionArray[i].time.startTimeHours, M = questionArray[i].time.startTimeMins;
             let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
             // condition to display the question (caption)
+            
             if (questionArray[i].index == key && secondsLeft <= 0) {
-                this.setState({
-                    currentQuestion : questionArray[i].Q
-                });
-                break;
+                console.log(hintArray[i]);
+                currentQuestion = questionArray[i].Q;
+                currentHint = hintArray[i].H;
             }
+            let idx = parseInt(questionArray[i].index, 10);
+            if (secondsLeft <= 0) questionColor[idx] = "forestgreen";
         }
+        this.setState({
+            currentQuestion : currentQuestion,
+            currentHint : currentHint,
+            questionColor : questionColor
+        });
     }
 
     handleClick2 = (key) => {
         this.setState({ visible2: true, cellKey : key});
+        let hintArray = this.state.hintArray;
+        let currentHint = ""
+        for (let i = 0; i < hintArray.length; i++) {
+            //console.log(questionArray[i].index + " " + key);
+            let today = new Date();
+            let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+            let D = hintArray[i].time.startDate, H = hintArray[i].time.startTimeHours, M = hintArray[i].time.startTimeMins;
+            let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
+            // condition to display the question (caption)
+            console.log(key);
+            if (hintArray[i].index == key && secondsLeft <= 0) {
+                //console.log(hintArray[i]);
+                currentHint = hintArray[i].H
+            }
+        }
+        let questionArray = this.state.questionArray;
+        let questionColor = this.state.questionColor;
+        for (let i = 0; i < questionArray.length; i++) {
+            console.log(questionArray[i].index + " " + key);
+            let today = new Date();
+            let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+            let D = questionArray[i].time.startDate, H = questionArray[i].time.startTimeHours, M = questionArray[i].time.startTimeMins;
+            let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
+            // condition to display the question (caption)
+            let idx = parseInt(questionArray[i].index, 10);
+            if (secondsLeft <= 0) questionColor[idx] = "forestgreen";
+        }
+        this.setState({
+            currentHint : currentHint,
+            questionColor : questionColor
+        });
     }
 
     handleOnChange = (input) => {
@@ -152,8 +199,20 @@ class Crossword extends Component {
         let key = "" + this.state.cellKey;
         let input = this.state.currentAnswer;
         //console.log(this.state.cellInfo[key]);
-        let isLock = 0, user = this.state.user;
+        // check if contest is over or not
+        let end = this.state.end;
+        let today = new Date();
+        let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+        let D = end.endDate, H = end.endTimeHours, M = end.endTimeMins;
+        let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
+        if (secondsLeft <= 0) {
+            this.setState({
+                inputError : "Contest is Over"
+            })
+        }
+        else {
         // first check if this question is already lock or not
+        let isLock = 0, user = this.state.user;
         //console.log(user.answers[0]);
         for (let i = 0; i < user.answers.length; i++) {
             if (user.answers[i].index == key && user.answers[i].isLock === 1) {
@@ -170,7 +229,7 @@ class Crossword extends Component {
             this.setState({inputError : ""});
             let squareValue = [], isVisible = [];
             for (let i = 0; i < 30 * 31; i++) {
-                console.log(this.state.squareValue[i]);
+                //console.log(this.state.squareValue[i]);
                 squareValue[i] = this.state.squareValue[i];
                 isVisible[i] = this.state.isVisible[i];
             }
@@ -215,7 +274,7 @@ class Crossword extends Component {
                 user : user
             });
 
-        }
+        }}
     }
 
 
@@ -223,6 +282,18 @@ class Crossword extends Component {
     handleOnLock = () => {
         // write your code here
         //prompt("Hello World!")
+        // check if contest over or not
+        let end = this.state.end;
+        let today = new Date();
+        let date = today.getDate(), hour = today.getHours(), min = today.getMinutes(), sec = today.getSeconds();
+        let D = end.endDate, H = end.endTimeHours, M = end.endTimeMins;
+        let secondsLeft = (D - date) * 24 * 60 * 60 + (H - hour) * 60 * 60 + (M - min) * 60 - sec;
+        if (secondsLeft <= 0) {
+            this.setState({
+                inputError : "Contest is Over"
+            })
+        }
+        else {
         let key = "" + this.state.cellKey;
         let isLocked = 0;
         let user = this.state.user;
@@ -252,6 +323,8 @@ class Crossword extends Component {
                 })
             }
             else {
+                let colorValue = this.state.colorValue;
+
                 for (let i = 0; i < user.answers.length; i++) {
                     if (user.answers[i].index === key) {
                         let today = new Date(), time = {
@@ -259,22 +332,36 @@ class Crossword extends Component {
                             min : today.getMinutes(),
                             sec : today.getSeconds()
                         }
+                        let isDownOrAcross = this.state.cellInfo[key].r, l = this.state.cellInfo[key].l;
+                        let j = parseInt( user.answers[i].index, 10)
+                        while (l) {
+                            console.log(l + " " + j);
+                            l--;
+                            colorValue[j] = "red";
+                            if (isDownOrAcross == 'a') j++;
+                            else j += 31;
+                        }
                         user.answers[i].isLock = 1;
                         user.answers[i].time = time;
                         break;
                     }
                 }
-                this.setState({
-                    user : user,
-                    inputError : "You answer is locked"
-                })
+                user.colorValue = colorValue
                 fetch(`http://localhost:4000/user/${this.state.id}`, {method : "put",
                 body: JSON.stringify(user),
                 headers : {
                     "Content-Type" : "application/json"
                 }}).then(res => res.json())
-                   .then(data => data);
+                   .then(data => data)
+                   .then(() => {
+                        this.setState({
+                            user : user,
+                            inputError : "You answer is locked",
+                            colorValue : colorValue
+                        })
+                   });
             }
+        }
         }
     }
     handleGetHint = () => {
@@ -292,7 +379,7 @@ class Crossword extends Component {
     }
     avoidSpace = (event) => {
         // Avoid user to use space while typing input
-        console.log(window.event.keyCode);
+        //console.log(window.event.keyCode);
         let k = event ? event.which : window.event.keyCode;
         if (k == 32) event.preventDefault();
     }
@@ -304,15 +391,20 @@ class Crossword extends Component {
     }
     componentDidMount() {
         // Fetching Questions
-        let isVisible = [], squareValue = [];
+        let isVisible = [], squareValue = [], colorValue = [];
         for (let i = 0; i < 30 * 31; i++) isVisible.push('hidden');
-        for (let i = 0; i < 30 * 31; i++) squareValue.push('#');
+        for (let i = 0; i < 30 * 31; i++) {
+            squareValue.push('#');
+            colorValue.push("rgb(46, 14, 231)");
+        }
         fetch('http://localhost:4000/c3')
         .then(res => res.json())
         .then(data => {
             this.setState(() => {return {
                 start : data.response[0].start, 
                 end : data.response[0].end,
+                questionArray: data.response[0].questions,
+                hintArray : data.response[0].hints
             }});
         });
 
@@ -322,12 +414,14 @@ class Crossword extends Component {
             this.setState({
                 squareValue : data.response.gameState,
                 isVisible : data.response.isVisible,
+                colorValue : data.response.colorValue,
                 user : data.response
             }, () => {
                 if (this.state.squareValue.length == 0) {
                     this.setState({
                         squareValue : squareValue,
-                        isVisible : isVisible
+                        isVisible : isVisible,
+                        colorValue : colorValue
                     })
                 }}
         )})
@@ -343,6 +437,8 @@ class Crossword extends Component {
                             isHintCell={this.state.isHintCell}
                             handleClick={this.handleClick} handleClick2={this.handleClick2}
                             squareValue={this.state.squareValue} 
+                            colorValue={this.state.colorValue}
+                            questionColor={this.state.questionColor}
                             isVisible={this.state.isVisible} /> 
         </div>);
         }
@@ -365,10 +461,12 @@ class Crossword extends Component {
                             handleOnLock={this.handleOnLock}
                             avoidSpace={this.avoidSpace}
                             currentQuestion={this.state.currentQuestion}
-                            handleGetHint={this.handleGetHint} hint={this.state.currentHint}
+                            currentHint={this.state.currentHint}
+                            handleGetHint={this.handleGetHint}
                             rodalHintS={this.state.rodalHint} rodalQuestionS={this.state.rodalQuestion}
                             handleRodalQuestion={this.handleRodalQuestion}
                             handleRodalHint={this.handleRodalHint}
+                            change={this.state.change}
                             />
                 </div>
                 <div>

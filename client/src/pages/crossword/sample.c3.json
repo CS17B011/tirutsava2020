@@ -1,0 +1,10 @@
+{	
+	"questions" : [{"index" : 10, "Q" : "Paa le tu aisi Fateh. Samandar teri pyass se darey.----------- There lines are for you.Your scars are beautiful.You are a trailblazer. Keep inspiring the millionto fight their toughest personal battles. Be the lifer you are! #worldcancerday", 
+	"time" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 4}},
+	{"index" : 163, "Q" : "Shoot days for ... It’s so hard to shoot here right now that cant’t even imagine what it must be like to live here under these conditions. We r blessed with air purifiers and masks. Pray for homeless. Be safe everyone.", "time" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 7}}],
+	"hints" : [{"index" : 10, "H" : "this is the first hint", "time" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 4}},
+	{"index" : 163, "H" : "this is the second hint", "time" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 4}},
+	{"index" : 230, "H" : "this is the third hint", "time" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 4}}],
+	"start" : {"startDate" : 24, "startTimeHours" : 9, "startTimeMins" : 3},
+	"end" : {"endDate" : 24, "endTimeHours" : 11, "endTimeMins" : 34}
+}
