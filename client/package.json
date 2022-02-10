@@ -5,7 +5,7 @@
   "dependencies": {
     "aos": "^2.3.4",
     "classnames": "^2.2.6",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.10.2",
     "react-countup": "^4.2.6",
     "react-coverflow": "^0.2.20",
